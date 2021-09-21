@@ -21,16 +21,16 @@ export type EntryData = CardSetData | FolderData;
 
 
 export function saveRaw(path: string, item: EntryData): Promise<EntryData> {
-    //console.info("[RAW]save ", path, item);
+    //console.info("[RAW] save ", path, item);
     return localforage.setItem(path, item);
 }
 
 export function loadRaw(path: string): Promise<EntryData | null> {
-    //console.info("[RAW]load ", path);
+    //console.info("[RAW] load ", path);
     return localforage.getItem(path)
 }
 
 export function removeRaw(path: string): Promise<void> {
-    //console.info("[RAW]remove ", path);
+    //console.info("[RAW] remove ", path);
     return localforage.removeItem(path);
 }

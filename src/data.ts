@@ -1,13 +1,10 @@
 import { writable, Writable } from "svelte/store";
 import { CardSetData, EntryType, FolderData, loadRaw, removeRaw, saveRaw, EntryData } from "./dataRaw";
 
-export const URL_BASE = '/#!';
+export const URL_BASE = __IS_PRODUCTION__ ?  '/remindme/#!' : '/#!';
 
 export const CARDS_BASE = '/cards';
 export const EDIT_BASE = '/edit';
-
-export const URL_CARDS_BASE = URL_BASE + CARDS_BASE;
-export const URL_EDIT_BASE = URL_BASE + EDIT_BASE;
 
 
 export const rootFolder: Writable<Folder | undefined> = writable(undefined);
@@ -29,6 +26,8 @@ async function loadEntryNoCache(path: string): Promise<Folder | CardSet | null> 
     }
 
     if (parsed != null) loadedData.set(path, parsed);
+    else loadedData.delete(path);
+
     return parsed;
 }
 
@@ -126,6 +125,7 @@ export class FsEntry<T extends FolderData | CardSetData> {
 
         const parent = await this.parent();
         if (parent === undefined) {
+            saveCacheEntry('/', this as any as Folder);
             // We are root baby, we ain' got no parents anyways
             return saves;
         }

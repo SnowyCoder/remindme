@@ -64,6 +64,7 @@
 			page = FolderView;
 		}
 	}));
+	router.redirect('/remindme/', '/');
 	router('*', load(NotFound));
 
 	router.start();
