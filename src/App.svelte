@@ -1,15 +1,18 @@
 <script lang='ts'>
 	import router from 'page'
-	import Home from './components/Home.svelte'
-	import About from './components/About.svelte'
+	import Home from './views/Home.svelte'
+	import About from './views/About.svelte'
 	import { CardSet, Folder, loadEntry, URL_BASE } from './data';
-	import CardSetView from './components/CardSetView.svelte';
+	import CardSetView from './views/CardSetView.svelte';
 	import { setContext } from 'svelte';
-	import CardSetEdit from './components/CardSetEdit.svelte';
+	import CardSetEdit from './views/CardSetEdit.svelte';
 	import Modal from 'svelte-simple-modal';
 	import { EntryType } from './dataRaw';
-	import FolderView from './components/FolderView.svelte';
-	import NotFound from './components/NotFound.svelte';
+	import FolderView from './views/FolderView.svelte';
+	import NotFound from './views/NotFound.svelte';
+    import Icon from 'fa-svelte';
+	import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
+	import PathNavigator from './components/PathNavigator.svelte';
 
 	let page = Home;
 	let params = {};
@@ -17,10 +20,6 @@
 	setContext('router', {
 		page, params,
 	});
-
-	interface PageContext {
-		params: any;
-	}
 
 	function load(x: any): () => void {
 		return () => {
@@ -32,7 +31,6 @@
 	function loadPage(pager: (data: CardSet | Folder) => void): (ctx: any) => void {
 		return async (ctx) => {
 			const path = '/' + ctx.params.path as string;
-			//const paths = path.split('/', 2);
 			const data = await loadEntry(path);
 			if (data == null) {
 				params = {};
@@ -71,10 +69,12 @@
 </script>
 
 <div class="navbar navbar-expand-lg navbar-dark bg-dark">
-	<div class="container">
+	<div class="container justify-content-start">
 		<a class="navbar-brand remindme" href={URL_BASE}>
-			Remindme
+			Remindme <Icon icon={faHome}></Icon>
 		</a>
+
+		<PathNavigator />
 	</div>
 </div>
 

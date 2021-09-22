@@ -67,7 +67,10 @@ export default {
 			inlineSources: !production
 		}),
 		replace({
-			__IS_PRODUCTION__: production,
+			preventAssignment: true,
+			values: {
+				__IS_PRODUCTION__: production,
+			},
 		}),
 
 		// In dev mode, call `npm run start` once

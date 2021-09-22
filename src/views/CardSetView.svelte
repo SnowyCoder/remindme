@@ -27,7 +27,6 @@
     chooseCard();
 
     function gotoEdit() {
-        console.log(EDIT_BASE + router.current.substring(CARDS_BASE.length));
         router.show(EDIT_BASE + router.current.substring(CARDS_BASE.length))
     }
 

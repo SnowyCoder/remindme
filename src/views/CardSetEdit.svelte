@@ -1,14 +1,15 @@
 <script lang="ts">
     import router from 'page';
 
-    import { CardSet, CARDS_BASE, EDIT_BASE, Folder } from "../data";
-    import EditableText from './EditableText.svelte';
+    import { CardSet, CARDS_BASE } from "../data";
+    import EditableText from '../components/EditableText.svelte';
     import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
     import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
     import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
     import Icon from 'fa-svelte';
 
     import { slide } from 'svelte/transition'
+    import { onDestroy, onMount } from 'svelte';
 
     export let cardset: CardSet;
     // Used to mantain a key for each card in the set (useful for animations)
@@ -33,6 +34,21 @@
         cardset.data.cards.splice(index, 1);
         cardset.data.cards = cardset.data.cards;
     }
+
+    let changeHistory = 0;
+    $: if (cardset !== undefined) {
+        changeHistory++;
+    }
+
+    const beforeUnload = () => {
+        return changeHistory > 2 ? 'dont' : undefined;
+    };
+    onMount(() => {
+        window.onbeforeunload = beforeUnload;
+    });
+    onDestroy(() => {
+        window.onbeforeunload = undefined;
+    })
 </script>
 
 <div class="container py-3">

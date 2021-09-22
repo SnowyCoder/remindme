@@ -1,7 +1,7 @@
 <script lang="ts">
     import router from 'page';
 
-    import { CARDS_BASE, EDIT_BASE, Folder, URL_CARDS_BASE } from '../data';
+    import { CARDS_BASE, EDIT_BASE, Folder } from '../data';
     import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
     import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
     import { faFolderPlus } from '@fortawesome/free-solid-svg-icons/faFolderPlus';
@@ -10,8 +10,8 @@
     import { slide } from 'svelte/transition';
     import { EntryType } from '../dataRaw';
     import { getContext } from 'svelte';
-    import ConfirmDialog from './ConfirmDialog.svelte';
-    import EditableText from './EditableText.svelte';
+    import ConfirmDialog from '../components/ConfirmDialog.svelte';
+    import EditableText from '../components/EditableText.svelte';
 
     const { open } = getContext('simple-modal');
 
@@ -32,10 +32,11 @@
     async function add() {
         const cardset = await folder.createEntry({
             type: EntryType.CardSet,
-            name: 'New',
+            name: 'This is a new cardset',
             cards: [
-                "Hello there",
-                "Generale kenobi"
+                'And these are the cards',
+                'Click any text to change it',
+                'This is the third card',
             ],
         });
 
